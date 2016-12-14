@@ -1,39 +1,28 @@
 #!/bin/bash
 
-file="$1" #filename
-
-if [ -z "$file" ] #Blank argument, script will terminate.
+file="$1"
+ 
+ if [ -z "$file" ] #Blank argument, script will terminate.
  
   then
     echo "Please indicate file... Exiting."
     exit
   
   else 
-        #Initial Start count Variables
-  	VAR_200=`awk '($9 ~ /200/)' $file |  wc -l`
-        VAR_404=`awk '($9 ~ /404/)' $file |  wc -l`
-        VAR_444=`awk '($9 ~ /444/)' $file |  wc -l`
-	  
-	  #Print Values
-          echo ======= Starting
-	  echo http code 200: $VAR_200
-	  echo http code 404: $VAR_404
-	  echo http code 444: $VAR_444
-	  sleep 3 # Delay 3 seconds
-	  
-	  trap "echo Exited!; exit;" SIGINT SIGTERM #Exit 
-	  
-		while true; do #Continuous checking of log file
-     		#Dynamic Variable
-		VAR_200=`awk '($9 ~ /200/)' $file |  wc -l`
-     		VAR_404=`awk '($9 ~ /404/)' $file |  wc -l`
-     		VAR_444=`awk '($9 ~ /444/)' $file |  wc -l`
-                
-		#Print Dynamic Values
-                echo =======
-     		echo http code 200: $VAR_200
-     		echo http code 404: $VAR_404
-     		echo http code 444: $VAR_444
-     		sleep 5 # Delay 5 seconds
-		done
-fi	
+    echo ======= Starting
+    trap "echo Exited!; exit;" SIGINT SIGTERM #Exit
+    
+    while true; 
+    do
+     LL=`cat access.log | cut -d '"' -f3 | cut -d ' ' -f2 | sort | uniq | sed '/^\s*#/d;/^\s*$/d' | xargs` # search unique http codes
+     count=`cat access.log | cut -d '"' -f3 | cut -d ' ' -f2 | sort | uniq | sed '/^\s*#/d;/^\s*$/d' |  wc -l` #count number of unique http codes
+     IFS=' ' declare -a 'codes_list=($LL)' #Input values to array
+        sleep 5 # Delay 5 seconds for viewing purposes
+        for ((i=0; i<$count; i++));
+        do
+            c=`grep ${codes_list[i]} $file |  wc -l` #count unique codes
+            echo http codes ${codes_list[i]}: $c # print unique codes and counts
+        done
+        echo ======= 
+	done
+fi
