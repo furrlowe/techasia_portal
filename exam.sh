@@ -11,10 +11,10 @@ if [ -z "$file" ]
   else 
 
   	VAR_200=`awk '($9 ~ /200/)' $file |  wc -l`
-    VAR_404=`awk '($9 ~ /404/)' $file |  wc -l`
-    VAR_444=`awk '($9 ~ /444/)' $file |  wc -l`
+        VAR_404=`awk '($9 ~ /404/)' $file |  wc -l`
+        VAR_444=`awk '($9 ~ /444/)' $file |  wc -l`
 	  
-    echo ======= Starting
+          echo ======= Starting
 	  echo http code 200: $VAR_200
 	  echo http code 404: $VAR_404
 	  echo http code 444: $VAR_444
@@ -26,7 +26,7 @@ if [ -z "$file" ]
      		VAR_404=`awk '($9 ~ /404/)' $file |  wc -l`
      		VAR_444=`awk '($9 ~ /444/)' $file |  wc -l`
         
-        echo =======
+                echo =======
      		echo http code 200: $VAR_200
      		echo http code 404: $VAR_404
      		echo http code 444: $VAR_444
