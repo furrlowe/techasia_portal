@@ -10,7 +10,7 @@ file="$1"
   
   else 
     echo ======= Starting
-    trap "echo Exited!; exit;" SIGINT SIGTERM #Exit
+    trap "echo Exited!; exit;" SIGINT SIGTERM # Controlled Exit (Crtl-c)
     
     while true; 
     do
