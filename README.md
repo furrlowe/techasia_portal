@@ -7,6 +7,6 @@ The script counts the number of identified http access code.
 
 Just download and run in terminal.
 
-$ ./exam.sh <filename>
+$ ./exam.sh filename
 
 Thanks!
