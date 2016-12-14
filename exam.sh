@@ -1,8 +1,8 @@
 #!/bin/bash
 
-file="$1"
+file="$1" #filename
 
-if [ -z "$file" ]
+if [ -z "$file" ] #Blank argument
  
   then
     echo "Please indicate file... Exiting."
@@ -18,9 +18,9 @@ if [ -z "$file" ]
 	  echo http code 200: $VAR_200
 	  echo http code 404: $VAR_404
 	  echo http code 444: $VAR_444
-	  sleep 3
+	  sleep 3 # Delay 3 seconds
+	  
 	  trap "echo Exited!; exit;" SIGINT SIGTERM
-
 		while true; do
      		VAR_200=`awk '($9 ~ /200/)' $file |  wc -l`
      		VAR_404=`awk '($9 ~ /404/)' $file |  wc -l`
@@ -30,6 +30,6 @@ if [ -z "$file" ]
      		echo http code 200: $VAR_200
      		echo http code 404: $VAR_404
      		echo http code 444: $VAR_444
-     		sleep 5
+     		sleep 5 # Delay 5 seconds
 		done
 fi	
